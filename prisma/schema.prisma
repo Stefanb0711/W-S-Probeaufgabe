@@ -13,6 +13,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+//Model für Postgrestabelle um die Besucherzahl mitzuzälen
+
 model visitor_count {
   id    Int    @id @default(autoincrement())
   count Int
