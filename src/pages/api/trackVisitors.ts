@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 
-import { prisma } from "../../../prisma/prisma-client";
+import { prisma } from "../../../lib/prisma";
 
 
 export default async function handler(
@@ -11,36 +11,53 @@ export default async function handler(
 ) {
 
 
+    /*
+    const visitorData = await prisma.visitor_count.findFirst();
+
+    console.log("Visitordata: ", visitorData, "");
+
+    return res.status(200).json({ count: visitorData });
+       */
+
 
     try {
-        const currentVisit = await prisma.visitor_count.findFirst({
-        });
+        const visitorData = await prisma.visitor_count.findFirst();
 
-        if (currentVisit) {
-            const updatedVisit = await prisma.visitor_count.update({
+
+        if (visitorData) {
+            const updatedVisitorData = await prisma.visitor_count.update({
                 where: {
-                    id: currentVisit.id
+                    id: visitorData.id,
                 },
                 data: {
-                    count: currentVisit.count + 1
+                    count: visitorData.count + 1,
                 },
-                select: {
-                    count: true
-                }
             });
 
-            console.log("Anzahl der Besucher: ", updatedVisit.count);
-            return res.status(200).json({ count: updatedVisit.count });
-
+            return res.status(200).json({ count: updatedVisitorData.count });
 
         } else {
-            return res.status(404).json({ error: "No visitor count found" });
 
+            const newVisitorData = await prisma.visitor_count.create({
+                data: {
+                    count: 1,
+                },
+            });
+
+            return res.status(201).json({ count: newVisitorData.count });
         }
 
+
+
     } catch (error) {
-        res.status(500).json({error: "An error occurred"});
+        console.error("Error updating visitor count:", error);
+        return res
+            .status(500)
+            .json({ error: "An error occurred while updating the visitor count" });
+
     }
 
-    //res.status(200).json({ name: "John Doe" });
+
+
+
 }

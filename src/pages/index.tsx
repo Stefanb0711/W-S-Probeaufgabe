@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import axios from "axios";
@@ -6,7 +8,6 @@ import {Header} from "next/dist/lib/load-custom-routes";
 import HeaderComponent from "@/components/header.component";
 import {useState, useEffect} from "react";
 import FooterComponent from "@/components/footer.component";
-
 
 
 const geistSans = Geist({
@@ -24,32 +25,75 @@ export default function Home() {
 
   const [quote, setQuote] = useState<string>("");
 
+  const [visitorCount, setVisitorCount] = useState<number>(0);
 
   const apiUrl: string = "https://api.chucknorris.io/jokes/random?category=dev";
 
-  const trackVisitorsUrl = "/api/trackVisitors";
+  const trackVisitorsURL = "/api/trackVisitors";
+
+
 
   const getQuoteFromApi = async () => {
     const response  = await axios.get(apiUrl);
 
     console.log(response.data.value);
-    setQuote(response.data.value);
+    //setQuote(response.data.value);
+
+
   }
 
-    useEffect(() => {
 
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(trackVisitorsUrl);
-          console.log("Response: ", response); // Führe hier weitere Aktionen aus
-        } catch (error) {
-          console.error("Fehler beim Abrufen der Daten:", error);
-        }
-      };
+  const getVisitors = async () => {
+    const response = await axios.get(trackVisitorsURL);
 
-      fetchData();
+    console.log("GetVisitorsAnswer: ", response.data["count"]);
 
-    }, []);
+
+
+    setVisitorCount(response.data["count"]);
+
+  }
+
+
+
+
+  useEffect(() => {
+    getQuoteFromApi();
+
+
+    getVisitors();
+
+  }, []);
+
+
+
+  /*
+  const getVisitorcount = async () => {
+    const visitorCount = await prisma.visitor_count.count({
+      where: {
+        id: 1
+      }
+    });
+
+    console.log("Visitorcount: ", visitorCount);
+  }
+  */
+
+
+
+
+    /*
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(trackVisitorsUrl);
+        console.log("Response: ", response); // Führe hier weitere Aktionen aus
+      } catch (error) {
+        console.error("Fehler beim Abrufen der Daten:", error);
+      }
+    };
+
+    fetchData();
+     */
 
 
   return (
@@ -87,3 +131,6 @@ export default function Home() {
 
 
 }
+
+
+
