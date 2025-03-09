@@ -5,6 +5,8 @@ import {ChuckNorrisApiAnswerModel} from "@/models/chuckNorrisApiModel.model";
 import {Header} from "next/dist/lib/load-custom-routes";
 import HeaderComponent from "@/components/header.component";
 import {useState, useEffect} from "react";
+import FooterComponent from "@/components/footer.component";
+
 
 
 const geistSans = Geist({
@@ -22,22 +24,32 @@ export default function Home() {
 
   const [quote, setQuote] = useState<string>("");
 
-  useEffect(() => {
-    const fetchQuote = async () => {
-      try {
-        const response = await fetch("/api/randomQuote");
-        const data = await response.json();
-        setQuote(data.value); // Zitat setzen
 
-        console.log("Data to set: ", data);
-      } catch (error) {
-        console.error("Fehler beim Abrufen des Zitats", error);
-      }
-    };
+  const apiUrl: string = "https://api.chucknorris.io/jokes/random?category=dev";
 
-    fetchQuote();
+  const trackVisitorsUrl = "/api/trackVisitors";
 
-  }, []);
+  const getQuoteFromApi = async () => {
+    const response  = await axios.get(apiUrl);
+
+    console.log(response.data.value);
+    setQuote(response.data.value);
+  }
+
+    useEffect(() => {
+
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(trackVisitorsUrl);
+          console.log("Response: ", response); // Führe hier weitere Aktionen aus
+        } catch (error) {
+          console.error("Fehler beim Abrufen der Daten:", error);
+        }
+      };
+
+      fetchData();
+
+    }, []);
 
 
   return (
@@ -47,57 +59,31 @@ export default function Home() {
 
       <HeaderComponent />
 
-      <main>
-        <h1>Hello World</h1>
+      <main className="flex justify-center items-center h-screen"
+      >
+        <div className={'flex items-center'}>
+          <div>
+            <img width={400} src={"chuck-norris.webp"} alt="Logo" />
+          </div>
+
+          <div style={{marginLeft: '50px'}}  className="flex flex-col justify-center items-center">
+            <h1>{quote}</h1>
+            <button style={{marginTop: '30px'}} className="px-6 py-3 bg-blue-500 text-white font-semibold
+        rounded-lg shadow-md hover:bg-blue-600
+        focus:outline-none focus:ring-2
+        focus:ring-blue-400 focus:ring-offset-2"
+                    onClick={getQuoteFromApi}>Neues Zitat</button>
+          </div>
+
+        </div>
+
+
       </main>
 
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      <FooterComponent />
+
     </div>
   );
+
+
 }
