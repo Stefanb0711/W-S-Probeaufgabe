@@ -25,11 +25,9 @@ export default function Home() {
 
   const [quote, setQuote] = useState<string>("");
 
-  const [visitorCount, setVisitorCount] = useState<number>(0);
 
   const apiUrl: string = "https://api.chucknorris.io/jokes/random?category=dev";
 
-  const trackVisitorsURL = "/api/trackVisitors";
 
 
 
@@ -37,22 +35,12 @@ export default function Home() {
     const response  = await axios.get(apiUrl);
 
     console.log(response.data.value);
-    //setQuote(response.data.value);
+    setQuote(response.data.value);
 
 
   }
 
 
-  const getVisitors = async () => {
-    const response = await axios.get(trackVisitorsURL);
-
-    console.log("GetVisitorsAnswer: ", response.data["count"]);
-
-
-
-    setVisitorCount(response.data["count"]);
-
-  }
 
 
 
@@ -61,7 +49,7 @@ export default function Home() {
     getQuoteFromApi();
 
 
-    getVisitors();
+    //getVisitors();
 
   }, []);
 
@@ -103,15 +91,15 @@ export default function Home() {
 
       <HeaderComponent />
 
-      <main className="flex justify-center items-center h-screen"
+      <main className="flex justify-center items-center h-screen w-full"
       >
         <div className={'flex items-center'}>
           <div>
             <img width={400} src={"chuck-norris.webp"} alt="Logo" />
           </div>
 
-          <div style={{marginLeft: '50px'}}  className="flex flex-col justify-center items-center">
-            <h1>{quote}</h1>
+          <div style={{marginLeft: '50px'}}  className="flex flex-col justify-center items-center max-w-lg">
+            <h1 className={'text-2xl break-words items-center text-center'}>{quote}</h1>
             <button style={{marginTop: '30px'}} className="px-6 py-3 bg-blue-500 text-white font-semibold
         rounded-lg shadow-md hover:bg-blue-600
         focus:outline-none focus:ring-2
