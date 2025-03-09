@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  nextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL:
+        postgresql://postgres:stAnWe@postgres:5432/indigoMooreProbeaufgabe
+      NEXT_DISABLE_ESLINT: 1
+
+    depends_on:
+      - postgres
+
+
+
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: stAnWe
+      POSTGRES_DB: indigoMooreProbeaufgabe
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+volumes:
+  postgres_data:
