@@ -8,8 +8,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL:
-        postgresql://postgres:stAnWe@postgres:5432/indigoMooreProbeaufgabe
+      DATABASE_URL: postgresql://postgres:stAnWe@postgres:5432/indigoMooreProbeaufgabe
       NEXT_DISABLE_ESLINT: 1
 
     depends_on:
