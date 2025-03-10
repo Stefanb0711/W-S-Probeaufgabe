@@ -85,36 +85,42 @@ export default function Home() {
 
 
   return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-
-      <HeaderComponent />
-
-      <main className="flex justify-center items-center h-screen w-full"
+      <div
+          className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
       >
-        <div className={'flex items-center'}>
-          <div>
-            <img width={400} src={"chuck-norris.webp"} alt="Logo" />
-          </div>
+        <HeaderComponent />
 
-          <div style={{marginLeft: '50px'}}  className="flex flex-col justify-center items-center max-w-lg">
-            <h1 className={'text-2xl break-words items-center text-center'}>{quote}</h1>
-            <button style={{marginTop: '30px'}} className="px-6 py-3 bg-blue-500 text-white font-semibold
+        <main className="flex justify-center items-center h-screen w-full">
+          <div className="flex items-center">
+            <div>
+              <img width={400} src={"chuck-norris.webp"} alt="Logo" />
+            </div>
+
+            <div
+                style={{ marginLeft: '50px', width: '500px' }}
+                className="flex flex-col justify-center items-center max-w-lg"
+            >
+              <h1 className="text-2xl break-words items-center text-center">
+                {quote}
+              </h1>
+              <button
+                  style={{ marginTop: '30px' }}
+                  className="px-6 py-3 bg-blue-500 text-white font-semibold
         rounded-lg shadow-md hover:bg-blue-600
         focus:outline-none focus:ring-2
         focus:ring-blue-400 focus:ring-offset-2"
-                    onClick={getQuoteFromApi}>Neues Zitat</button>
+                  onClick={getQuoteFromApi}
+              >
+                Neues Zitat
+              </button>
+            </div>
           </div>
+        </main>
 
-        </div>
+        <FooterComponent />
+      </div>
 
 
-      </main>
-
-      <FooterComponent />
-
-    </div>
   );
 
 
