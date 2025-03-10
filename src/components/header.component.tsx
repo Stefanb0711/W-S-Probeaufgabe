@@ -6,7 +6,8 @@ const NavigationBar = () => {
 
 
     return (
-        <div className=" p-4 flex flex-col md:flex-row justify-between items-center relative w-full">
+        <div className=" p-4 flex flex-col md:flex-row justify-between items-center relative w-full
+        h-[80px] ">
             {/* Bild in der linken oberen Ecke */}
             <img
                 width={200}

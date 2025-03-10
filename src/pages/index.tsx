@@ -90,7 +90,7 @@ export default function Home() {
       >
         <HeaderComponent />
 
-        <main className="flex justify-center items-center h-screen w-full">
+        <main className="mt-16 flex justify-center items-center h-screen w-full">
           <div className="flex items-center">
             <div>
               <img width={400} src={"chuck-norris.webp"} alt="Logo" />
