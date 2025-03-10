@@ -12,7 +12,7 @@ RUN npm install
 COPY prisma ./prisma
 
 
-# Prisma-Client generieren
+# Prisma-Client generieren /liest schema.prisma ein und stellt Methoden für Zugriff auf Db zur Verfügung
 RUN npx prisma generate
 
 
