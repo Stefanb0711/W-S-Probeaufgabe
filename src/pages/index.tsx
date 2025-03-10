@@ -111,7 +111,7 @@ export default function Home() {
         focus:ring-blue-400 focus:ring-offset-2"
                   onClick={getQuoteFromApi}
               >
-                Neues Zitat
+                Neuer Witz
               </button>
             </div>
           </div>
