@@ -109,7 +109,7 @@ d88d1757-d804-4558-b8ce-96aaf153a497	b322a702a25b9781db23eccf6b2fefe92e5de476f46
 --
 
 COPY public.visitor_count (id, count) FROM stdin;
-1	40
+1	0
 \.
 
 
